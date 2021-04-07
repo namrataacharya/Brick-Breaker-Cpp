@@ -1,5 +1,5 @@
 
-#Brick Breaker
+# Brick Breaker
 
 For my final project, I am going to recreate the game Brick Breaker.
 This is a game that was developed by Ali Asaria and released in 1999. Because this
