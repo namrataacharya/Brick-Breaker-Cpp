@@ -1,7 +1,3 @@
-//
-// Created by Namrata Acharya on 4/19/21.
-//
-
 #include "brick_breaker_app.h"
 
 using brickbreaker::BrickBreakerApp;

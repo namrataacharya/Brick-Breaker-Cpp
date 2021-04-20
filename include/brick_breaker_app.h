@@ -1,8 +1,4 @@
-//
-// Created by Namrata Acharya on 4/19/21.
-//
 #pragma once
-
 #ifndef FINAL_PROJECT_NAMRATAACHARYA2_BRICK_BREAKER_APP_H
 #define FINAL_PROJECT_NAMRATAACHARYA2_BRICK_BREAKER_APP_H
 #endif //FINAL_PROJECT_NAMRATAACHARYA2_BRICK_BREAKER_APP_H
@@ -28,7 +24,6 @@ namespace brickbreaker {
         const int kMargin = 100;
 
     private:
-        //GasContainer container_ = GasContainer(60);
         GameBox game_ = GameBox();
     };
 
