@@ -28,6 +28,7 @@ namespace brickbreaker {
     }
 
     void GameBox::AdvanceOneFrame() {
+        //CheckPaddleCollision();
         CheckWallCollision();
         CheckPaddleCollision();
         ball_.UpdatePosition();
@@ -57,6 +58,10 @@ namespace brickbreaker {
 
             //checks if ball hits paddle's upper y surface
             if (ball_.GetPosition().y >= paddle_.GetUpper() - ball_.GetRadius()) {
+
+                //trying to get rid of boundary issue
+                ball_.SetPosition(vec2 (ball_.GetPosition().x, paddle_.GetUpper() - ball_.GetRadius()));
+
                 vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
                 ball_.SetVelocity(current_velocity);
             }
