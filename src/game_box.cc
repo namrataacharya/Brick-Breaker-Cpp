@@ -8,7 +8,7 @@ namespace brickbreaker {
 
         glm::vec2 position(400, 600);
         glm::vec2 velocity(3, 3);
-        ball_ = Ball(position, velocity, 15);
+        ball_ = Ball(position, velocity, 10);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
                             vec2 (paddle_right_, paddle_bottom_) );
@@ -66,6 +66,10 @@ namespace brickbreaker {
                 ball_.SetVelocity(current_velocity);
             }
         }
+    }
+
+    Ball& GameBox::GetBall() {
+        return ball_;
     }
 
     Paddle& GameBox::GetPaddle() {
