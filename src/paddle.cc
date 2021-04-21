@@ -7,7 +7,6 @@ namespace brickbreaker {
 
     Paddle::Paddle() {}
 
-
     Paddle::Paddle(vec2 left_bound, vec2 right_bound) {
         left_bound_ = left_bound;
         right_bound_ = right_bound;
@@ -17,14 +16,55 @@ namespace brickbreaker {
 
         upper_y_ = left_bound.y;
         lower_y_ = right_bound.y;
+
+        length_ = right_x_ - left_x_;
+    }
+
+    void Paddle::MoveRight() {
+        right_bound_ += vec2 (shift, 0);
+        left_bound_ += vec2 (shift, 0);
+
+        //make sure paddle is within game box
+        if (right_bound_.x >= right_wall_) {
+            right_bound_ = vec2 (right_wall_, upper_y_);
+            left_bound_ = vec2  (right_wall_ - length_, lower_y_);
+        }
+
+        right_x_ = right_bound_.x;
+        lower_y_ = right_bound_.y;
+        left_x_ = left_bound_.x;
+        upper_y_ = left_bound_.y;
+    }
+
+    void Paddle::MoveLeft() {
+        right_bound_ += vec2 (-shift, 0);
+        left_bound_ += vec2 (-shift, 0);
+
+        //make sure paddle is within game box
+        if (left_bound_.x <= left_wall_) {
+            right_bound_ = vec2 (left_wall_ + length_, upper_y_);
+            left_bound_ = vec2  (left_wall_, lower_y_);
+        }
+
+        right_x_ = right_bound_.x;
+        lower_y_ = right_bound_.y;
+        left_x_ = left_bound_.x;
+        upper_y_ = left_bound_.y;
     }
 
     void Paddle::SetLeftBound(vec2 newLeft) {
         left_bound_ = newLeft;
+
+        left_x_ = newLeft.x;
+        upper_y_ = newLeft.y;
     }
 
     void Paddle::SetRightBound(vec2 newRight) {
         right_bound_ = newRight;
+
+        right_x_ = newRight.x;
+        lower_y_ = newRight.y;
+
     }
 
     vec2 Paddle::GetLeftBound() const {
@@ -36,42 +76,20 @@ namespace brickbreaker {
     }
 
 
-
     int Paddle::GetLeft() const {
         return left_x_;
     }
+
     int Paddle::GetRight() const {
         return right_x_;
     }
+
     int Paddle::GetUpper() const {
         return upper_y_;
     }
+
     int Paddle::GetLower() const {
         return lower_y_;
     }
-
-
-
-
-
-    /*
-    Paddle::Paddle(vec2 position) {
-        position_ = position;
-    }
-
-    void Paddle::SetPosition(vec2 newPosition) {
-        position_ = newPosition;
-    }
-
-    vec2 Paddle::GetPosition() const {
-        return position_;
-    }
-     */
-
-    /*
-    void Paddle::UpdatePosition() {
-        position_ += velocity_;
-    }
-     */
 
 }

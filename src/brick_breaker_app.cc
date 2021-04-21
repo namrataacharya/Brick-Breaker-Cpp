@@ -17,4 +17,18 @@ namespace brickbreaker {
         game_.AdvanceOneFrame();
     }
 
+    void BrickBreakerApp::keyDown(ci::app::KeyEvent event) {
+        switch (event.getCode()) {
+            case ci::app::KeyEvent::KEY_RIGHT:
+                game_.GetPaddle().MoveRight();
+                game_.CheckPaddleCollision(); //gets rid of boundary issue
+                break;
+
+            case ci::app::KeyEvent::KEY_LEFT:
+                game_.GetPaddle().MoveLeft();
+                game_.CheckPaddleCollision(); //gets rid of boundary issue
+                break;
+        }
+    }
+
 }  // namespace brickbreaker

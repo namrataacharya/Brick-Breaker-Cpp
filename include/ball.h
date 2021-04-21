@@ -27,7 +27,7 @@ namespace brickbreaker {
          * Changes and sets the ball's velocity.
          * @param newVelocity - the ball's starting position.
          */
-        void SetVelocity(vec2 newVelocity) ;
+        void SetVelocity(vec2 newVelocity);
 
         /**
          * Changes and sets the ball's position.

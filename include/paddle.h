@@ -19,23 +19,15 @@ namespace brickbreaker {
          */
         Paddle(vec2 left_bound, vec2 right_bound);
 
+        void MoveRight();
+        void MoveLeft();
 
-        //void SetPosition(vec2 newPosition);
+
         void SetLeftBound(vec2 newLeft);
         void SetRightBound(vec2 newRight);
 
-        /**
-         * Returns the paddle's current position.
-         * @return vector representing ball's position.
-         */
-        //vec2 GetPosition() const;
         vec2 GetLeftBound() const;
         vec2 GetRightBound() const;
-
-        /**
-         * Updates the ball's position based on its velocity and current position.
-         */
-        //void UpdatePosition();
 
 
         int GetLeft() const;
@@ -43,11 +35,11 @@ namespace brickbreaker {
         int GetUpper() const;
         int GetLower() const;
 
-
-
-
     private:
-        //vec2 position_;
+
+        int shift = 30;
+
+        int length_;
 
         vec2 left_bound_;
         vec2 right_bound_;
@@ -57,7 +49,8 @@ namespace brickbreaker {
         int upper_y_;
         int lower_y_;
 
-
+        int left_wall_ = 100;
+        int right_wall_ = 700;
 
     };
 

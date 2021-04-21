@@ -19,6 +19,7 @@ namespace brickbreaker {
 
         void draw() override;
         void update() override;
+        void keyDown(ci::app::KeyEvent event) override;
 
         const int kWindowSize = 800; //650
         const int kMargin = 100;

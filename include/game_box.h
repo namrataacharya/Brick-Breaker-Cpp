@@ -33,6 +33,8 @@ namespace brickbreaker {
 
         void CheckPaddleCollision();
 
+        Paddle& GetPaddle();
+
 
     private:
 
