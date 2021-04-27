@@ -11,7 +11,24 @@ namespace brickbreaker {
         ball_ = Ball(position, velocity, 10);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
-                            vec2 (paddle_right_, paddle_bottom_) );
+                            vec2 (paddle_right_, paddle_bottom_));
+
+        int max_strength_level = 4; //# of brick levels
+        int bricks_per_row = 10;
+
+        //takes care of x/row spacing
+        int brick_length = game_box_length_ / bricks_per_row;
+        int end_x_prev_brick;
+
+        //takes care of y/column spacing
+        int brick_height = brick_space_y / max_strength_level;
+
+        for (int i = 1; i <= max_strength_level; i++) {
+            for (int j = 0; j < bricks_per_row; j++) {
+                //Brick();
+                bricks_.push_back(Brick(i)); //i = strength (1 thru 4)
+            }
+        }
 
     }
 
@@ -25,12 +42,45 @@ namespace brickbreaker {
 
         ci::gl::color(ci::Color("cyan"));
         ci::gl::drawSolidRect(ci::Rectf(paddle_.GetLeftBound(), paddle_.GetRightBound()));
+
+        //draws all bricks
+        /*
+        for(int i = 0; i < bricks_.size(); i++) {
+            if (i % 2 == 0) {
+                ci::gl::color(ci::Color("yellow"));
+                ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
+                                                  vec2(right_wall_, lower_wall_)));
+
+            } else {
+                ci::gl::color(ci::Color("green"));
+                ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
+                                                  vec2(right_wall_, lower_wall_)));
+            }
+        }*/
+        int color_switch = 0;
+        for(const Brick &brick : bricks_) {
+            if (color_switch % 2 == 0) {
+                ci::gl::color(ci::Color("yellow"));
+                /*
+                ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
+                                                  vec2(right_wall_, lower_wall_)));*/
+
+            } else {
+                ci::gl::color(ci::Color("green"));
+                /*
+                ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
+                                                  vec2(right_wall_, lower_wall_)));*/
+            }
+            ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
+            color_switch++;
+        }
     }
 
     void GameBox::AdvanceOneFrame() {
-        //CheckPaddleCollision();
         CheckWallCollision();
         CheckPaddleCollision();
+        CheckBrickCollision(); // new, just added
+
         ball_.UpdatePosition();
     }
 
@@ -67,6 +117,8 @@ namespace brickbreaker {
             }
         }
     }
+
+    void GameBox::CheckBrickCollision() {} // FIX THIS
 
     Ball& GameBox::GetBall() {
         return ball_;
