@@ -22,13 +22,11 @@ namespace brickbreaker {
         void MoveRight();
         void MoveLeft();
 
-
         void SetLeftBound(vec2 newLeft);
         void SetRightBound(vec2 newRight);
 
         vec2 GetLeftBound() const;
         vec2 GetRightBound() const;
-
 
         int GetLeft() const;
         int GetRight() const;
@@ -38,7 +36,6 @@ namespace brickbreaker {
     private:
 
         int shift = 30;
-
         int length_;
 
         vec2 left_bound_;

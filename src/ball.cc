@@ -50,4 +50,9 @@ namespace brickbreaker {
         speed_ = length(velocity_);
     }
 
+
+    void Ball::IncreaseVelocity() {
+        velocity_ = velocity_ + vec2(0.01, 0.01);
+    }
+
 }

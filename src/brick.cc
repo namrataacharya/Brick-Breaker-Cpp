@@ -9,18 +9,6 @@ namespace brickbreaker {
         strength_ = strength;
     }
 
-    /*
-    Brick::Brick(int left_wall, int right_wall, int upper_wall, int lower_wall, int strength) {
-        left_wall_ = left_wall;
-        right_wall_ = right_wall;
-        upper_wall_ = upper_wall;
-        lower_wall_ = lower_wall;
-        strength_ = strength;
-
-        left_bound_ = vec2(left_wall_, upper_wall_);
-        right_bound_ = vec2(right_wall_, lower_wall_);
-    }*/
-
     Brick::Brick(double left_wall, double right_wall, double upper_wall, double lower_wall, double strength) {
         left_wall_ = left_wall;
         right_wall_ = right_wall;
@@ -31,23 +19,6 @@ namespace brickbreaker {
         left_bound_ = vec2(left_wall_, upper_wall_);
         right_bound_ = vec2(right_wall_, lower_wall_);
     }
-
-    /*
-    int Brick::GetLeftWall() {
-        return left_wall_;
-    }
-
-    int Brick::GetRightWall() {
-        return right_wall_;
-    }
-
-    int Brick::GetUpperWall() {
-        return upper_wall_;
-    }
-
-    int Brick::GetLowerWall() {
-        return lower_wall_;
-    }*/
 
     double Brick::GetLeftWall() {
         return left_wall_;

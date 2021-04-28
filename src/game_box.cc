@@ -23,18 +23,10 @@ namespace brickbreaker {
         //int brick_height = brick_space_y / max_strength_level;
         double brick_height = double(brick_space_y) / double(max_strength_level);
 
-        /*
-        int brick_left;
-        int brick_right;
-        int brick_upper;
-        int brick_lower;
-         */
-
         double brick_left;
         double brick_right;
         double brick_upper;
         double brick_lower;
-
 
         for (int i = 1; i <= max_strength_level; i++) {
             for (int j = 0; j < bricks_per_row; j++) {
@@ -44,34 +36,11 @@ namespace brickbreaker {
                 brick_upper = upper_wall_ + (i * brick_height);
                 brick_lower = brick_upper + brick_height;
 
-                /*
-                brick_left = double(left_wall_ + (j * brick_length));
-                brick_right = double(brick_left + brick_length);
-                brick_upper = upper_wall_ + (i * brick_height); //(i - 1)
-                brick_lower = brick_upper + brick_height;
-                 */
-                /*
-                if (j == 0) {
-                    brick_left = double(left_wall_ + (j * brick_length));
-                    brick_right = double(brick_left + brick_length);
-                    brick_upper = upper_wall_ + (i * brick_height); //(i - 1)
-                    brick_lower = brick_upper + brick_height;
-
-                } else {
-                    brick_left = double(left_wall_ + (j * brick_length)); // + 1;
-                    brick_right = double(brick_left + brick_length);
-                    brick_upper = upper_wall_ + (i * brick_height); //(i - 1)
-                    brick_lower = brick_upper + brick_height; // + 1;
-                }
-                 */
-
                 // FIX STRENGTH ASSIGNMENT, INCORRECT!
                 // i = strength (1 thru 4)
                 bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, i)); //incorrect i value
-
             }
         }
-
     }
 
     void GameBox::Display() const {
@@ -86,7 +55,6 @@ namespace brickbreaker {
         ci::gl::drawSolidRect(ci::Rectf(paddle_.GetLeftBound(), paddle_.GetRightBound()));
 
         //draws all bricks
-
         int color_switch = 0;
         int color_spacer = 255 / bricks_.size();
         int color_multiplier = 0;
@@ -98,7 +66,6 @@ namespace brickbreaker {
 
             } else {
                 ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
-
             }
 
             //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
@@ -114,6 +81,14 @@ namespace brickbreaker {
         CheckBrickCollision();
         CheckPaddleCollision();
         ball_.UpdatePosition();
+        /*
+        if (frame_count_ == 50) {
+            ball_.IncreaseVelocity();
+            frame_count_ = 0;
+        }
+
+        frame_count_++;
+         */
     }
 
     void GameBox::CheckWallCollision() {
@@ -150,7 +125,7 @@ namespace brickbreaker {
         }
     }
 
-    void GameBox::CheckBrickCollision() { // FIX THIS
+    void GameBox::CheckBrickCollision() {
 
         for (Brick &brick : bricks_) {
             if (ball_.GetPosition().x >= brick.GetLeftWall() &&

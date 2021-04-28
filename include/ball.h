@@ -75,6 +75,8 @@ namespace brickbreaker {
          */
         void UpdateSpeed();
 
+        void IncreaseVelocity();
+
     private:
         vec2 position_;
         vec2 velocity_;

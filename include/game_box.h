@@ -47,6 +47,8 @@ namespace brickbreaker {
         Paddle paddle_;
         std::vector<Brick> bricks_;
 
+        //int frame_count_ = 0;
+
         int paddle_left_ = 370; //350
         int paddle_right_ = 430; //450
         int paddle_top_ = 660; //650
