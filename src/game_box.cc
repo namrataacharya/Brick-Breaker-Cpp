@@ -6,9 +6,9 @@ namespace brickbreaker {
 
     GameBox::GameBox() {
 
-        glm::vec2 position(400, 600);
-        glm::vec2 velocity(3, 3);
-        ball_ = Ball(position, velocity, 10);
+        glm::vec2 position(400, 115);  //(400, 600)
+        glm::vec2 velocity(3, 3);  // (3, 3)
+        ball_ = Ball(position, velocity, 7);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
                             vec2 (paddle_right_, paddle_bottom_));
@@ -39,7 +39,7 @@ namespace brickbreaker {
         for (int i = 1; i <= max_strength_level; i++) {
             for (int j = 0; j < bricks_per_row; j++) {
 
-                brick_left = left_wall_ + (j * brick_length) + 50;
+                brick_left = left_wall_ + (j * brick_length) + 50; // + 50
                 brick_right = brick_left + brick_length;
                 brick_upper = upper_wall_ + (i * brick_height);
                 brick_lower = brick_upper + brick_height;
@@ -93,44 +93,13 @@ namespace brickbreaker {
 
         for(const Brick &brick : bricks_) {
 
-            /*
             if (color_switch % 2 == 0) {
-                //ci::gl::color(ci::Color("yellow"));
-
-                ci::gl::color(ci::Color8u(255 - (color_multiplier * color_spacer),
-                                          178, (color_multiplier * color_spacer)));
-
-                ci::gl::color(ci::Color8u(255 - (color_multiplier * color_spacer),
-                                          178,
-                                          (color_multiplier * color_spacer)));
-                //green: (color_multiplier * color_spacer)
-
+                ci::gl::color(ci::Color8u(220,0, (color_multiplier * color_spacer)));
 
             } else {
-                //ci::gl::color(ci::Color("green"));
-                //ci::gl::color(ci::Color8u(255, 178, 112));
-
-                ci::gl::color(ci::Color8u(255 - (color_multiplier * color_spacer),
-                                          178, (color_multiplier * color_spacer)));
-
-                ci::gl::color(ci::Color8u(255 - (color_multiplier * color_spacer),
-                                          178,
-                                          (color_multiplier * color_spacer) / 2));
-
-            }*/
-            if (color_switch % 2 == 0) {
-                ci::gl::color(ci::Color8u(220, // / 2, // - (color_multiplier * color_spacer),
-                                          0, (color_multiplier * color_spacer)));
-
-            } else {
-                ci::gl::color(ci::Color8u(220, // - (color_multiplier * color_spacer),
-                                          75, (color_multiplier * color_spacer)));
+                ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
 
             }
-
-            /*
-            ci::gl::color(ci::Color8u(255, // - (color_multiplier * color_spacer),
-                                      178, (color_multiplier * color_spacer)));*/
 
             //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
             ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
@@ -142,9 +111,8 @@ namespace brickbreaker {
 
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
+        CheckBrickCollision();
         CheckPaddleCollision();
-        CheckBrickCollision(); // new, just added
-
         ball_.UpdatePosition();
     }
 
@@ -189,39 +157,25 @@ namespace brickbreaker {
                 ball_.GetPosition().x <= brick.GetRightWall()) {
 
                 //checks if ball hits brick upper/lower wall
-                if (ball_.GetPosition().y == brick.GetLowerWall() + ball_.GetRadius()||
-                    ball_.GetPosition().y == brick.GetUpperWall() - ball_.GetRadius()) {
+                if (ball_.GetPosition().y >= brick.GetLowerWall() + ball_.GetRadius() ||
+                    ball_.GetPosition().y <= brick.GetUpperWall() - ball_.GetRadius()) {
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
                     ball_.SetVelocity(current_velocity);
-
                 }
             }
 
-            if (ball_.GetPosition().y >= brick.GetLowerWall() &&
-                ball_.GetPosition().y <= brick.GetUpperWall()) {
+            if (ball_.GetPosition().y <= brick.GetLowerWall() &&
+                ball_.GetPosition().y >= brick.GetUpperWall()) {
 
                 //checks if ball hits brick left/right side wall
-                if (ball_.GetPosition().x == brick.GetLeftWall() - ball_.GetRadius() ||
-                    ball_.GetPosition().x == brick.GetRightWall() + ball_.GetRadius()) {
+                if (ball_.GetPosition().x >= brick.GetLeftWall() - ball_.GetRadius() &&
+                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius()) {
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(-1, 1);
                     ball_.SetVelocity(current_velocity);
-
                 }
             }
-
-
-            /*
-            if (ball_.GetPosition().y <= upper_wall_ + ball_.GetRadius() ||
-                ball_.GetPosition().y >= lower_wall_ - ball_.GetRadius()) {
-
-                vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
-                ball_.SetVelocity(current_velocity);
-            }
-             */
-
-
         }
     }
 
