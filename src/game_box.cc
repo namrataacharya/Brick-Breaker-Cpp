@@ -7,7 +7,7 @@ namespace brickbreaker {
     GameBox::GameBox() {
 
         glm::vec2 position(400, 115);  //(400, 600)
-        glm::vec2 velocity(3, 3);  // (3, 3)
+        glm::vec2 velocity(6, 6);  // (3, 3)
         ball_ = Ball(position, velocity, 7);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
@@ -53,19 +53,55 @@ namespace brickbreaker {
         ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
                                           vec2(right_wall_, lower_wall_)));
 
-        /*
+        ///*
         ci::gl::color(ci::Color("magenta"));
         ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());
-         */
+         //*/
 
         ci::gl::color(ci::Color("cyan"));
         ci::gl::drawSolidRect(ci::Rectf(paddle_.GetLeftBound(), paddle_.GetRightBound()));
 
         //draws all bricks
+        /*
         int color_switch = 0;
         int color_spacer = 255 / bricks_.size();
-        int color_multiplier = 0;
+        int color_multiplier = 0;*/
 
+        if (bricks_.size() != 0) {
+
+            //draws all bricks
+            int color_switch = 0;
+            int color_spacer = 255 / bricks_.size();
+            int color_multiplier = 0;
+
+            for(const Brick &brick : bricks_) {
+
+                if (color_switch % 2 == 0) {
+                    ci::gl::color(ci::Color8u(220,0, (color_multiplier * color_spacer)));
+
+                } else {
+                    ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
+                }
+
+                /*
+                if (brick.IsDestroyed()) {
+                    ci::gl::color(ci::Color("black"));
+                }*/
+
+                //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
+                ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
+
+                color_multiplier++;
+                color_switch++;
+            }
+
+        } else {
+            ci::gl::drawStringCentered("GAME OVER", vec2((right_wall_ + left_wall_) / 2,
+                                                         (upper_wall_ + lower_wall_) / 2), "green",
+                                       cinder::Font("Arial", 20));
+        }
+
+        /*
         for(const Brick &brick : bricks_) {
 
             if (color_switch % 2 == 0) {
@@ -75,23 +111,23 @@ namespace brickbreaker {
                 ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
             }
 
-            if (brick.IsDestroyed()) {
-                ci::gl::color(ci::Color("black"));
-            }
-
-            ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
-            //ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
+            //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
+            ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
 
             color_multiplier++;
             color_switch++;
-        }
-
+        } */
+        /*
         ci::gl::color(ci::Color("magenta"));
-        ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());
+        ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());*/
     }
 
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
+        /*
+        if (!bricks_.empty()) {
+            CheckBrickCollision();
+        }*/
         CheckBrickCollision();
         CheckPaddleCollision();
         ball_.UpdatePosition();
@@ -148,25 +184,32 @@ namespace brickbreaker {
                 ball_.GetPosition().x <= brick.GetRightWall()) {
 
                 //checks if ball hits brick upper/lower wall
-                if ((ball_.GetPosition().y >= brick.GetLowerWall() + ball_.GetRadius() && //OG: ||
-                    ball_.GetPosition().y <= brick.GetUpperWall() - ball_.GetRadius()) &&
-                    brick.IsDestroyed() == false) {
+                if ((ball_.GetPosition().y <= brick.GetLowerWall() + ball_.GetRadius() && //OG: ||
+                    ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) { //&& brick.IsDestroyed() == false
+
+                    /*
+                    brick.IncreaseHitCount();
+                    if (brick.IsDestroyed() == false) {
+                        vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
+                        ball_.SetVelocity(current_velocity);
+                    }*/
+                    brick.IncreaseHitCount();
+                    if (brick.IsDestroyed() == true) {
+                        bricks_.erase(bricks_.begin() + current);
+                    }
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
                     ball_.SetVelocity(current_velocity);
 
-                    //removes brick form game if hit certain # of times
+                    std::cout << "upper / lower wall HIT" << std::endl;
+
+                    //removes brick from game if hit certain # of times
                     /*
                     brick.IncreaseHitCount();
                     if (brick.IsDestroyed() == true) {
                         bricks_.erase(bricks_.begin() + current);
                     }
-                     */
-                    brick.IncreaseHitCount();
-                    /*
-                    if (brick.IsDestroyed() == true) {
-                        bricks_.erase(bricks_.begin() + current);
-                    }*/
+                     //*/
                 }
             }
 
@@ -175,24 +218,28 @@ namespace brickbreaker {
 
                 //checks if ball hits brick left/right side wall
                 if ((ball_.GetPosition().x >= brick.GetLeftWall() - ball_.GetRadius() &&
-                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius()) &&
-                    brick.IsDestroyed() == false) {
+                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius())) { // && brick.IsDestroyed() == false
+
+                    /*
+                    brick.IncreaseHitCount();
+                    if (brick.IsDestroyed() == false) {
+                        vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
+                        ball_.SetVelocity(current_velocity);
+                    }
+                     */
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(-1, 1);
                     ball_.SetVelocity(current_velocity);
 
-                    //removes brick form game if hit certain # of times
-                    /*
+                    std::cout << "side wall HIT" << std::endl;
+
+                    //removes brick from game if hit certain # of times
+                    ///*
                     brick.IncreaseHitCount();
                     if (brick.IsDestroyed() == true) {
                         bricks_.erase(bricks_.begin() + current);
                     }
-                     */
-                    brick.IncreaseHitCount();
-                    /*
-                    if (brick.IsDestroyed() == true) {
-                        bricks_.erase(bricks_.begin() + current);
-                    }*/
+                     //*/
                 }
             }
 
@@ -209,3 +256,5 @@ namespace brickbreaker {
     }
 
 }
+
+
