@@ -30,7 +30,7 @@ namespace brickbreaker {
         void IncreaseHitCount();
 
         //true if brick is destroyed by ball (after certain # of hits)
-        bool IsDestroyed();
+        bool IsDestroyed() const;
 
 
     private:
@@ -45,7 +45,7 @@ namespace brickbreaker {
         vec2 right_bound_;
 
         int strength_;
-        int hit_count_;
+        int hit_count_ = 0;
 
         bool is_destroyed_ = false;
 
