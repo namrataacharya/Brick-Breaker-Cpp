@@ -7,7 +7,7 @@ namespace brickbreaker {
     GameBox::GameBox() {
 
         glm::vec2 position(400, 115);  //(400, 600)
-        glm::vec2 velocity(6, 6);  // (3, 3)
+        glm::vec2 velocity(10, 10);  // (3, 3)
         ball_ = Ball(position, velocity, 7);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
@@ -41,8 +41,8 @@ namespace brickbreaker {
                 // FIX STRENGTH ASSIGNMENT, INCORRECT!
                 // i = strength (1 thru 4)
                 //bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, i)); //incorrect i value*/
-                //bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, brick_strength));
-                bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, 1));
+                bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, brick_strength));
+                //bricks_.push_back(Brick(brick_left, brick_right, brick_upper, brick_lower, 2));
             }
             brick_strength--;
         }
@@ -67,7 +67,7 @@ namespace brickbreaker {
         int color_spacer = 255 / bricks_.size();
         int color_multiplier = 0;*/
 
-        if (bricks_.size() != 0) {
+        if (!bricks_.empty()) {
 
             //draws all bricks
             int color_switch = 0;
@@ -98,7 +98,7 @@ namespace brickbreaker {
         } else {
             ci::gl::drawStringCentered("GAME OVER", vec2((right_wall_ + left_wall_) / 2,
                                                          (upper_wall_ + lower_wall_) / 2), "green",
-                                       cinder::Font("Arial", 20));
+                                       cinder::Font("Arial", 30));
         }
 
         /*
@@ -124,10 +124,6 @@ namespace brickbreaker {
 
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
-        /*
-        if (!bricks_.empty()) {
-            CheckBrickCollision();
-        }*/
         CheckBrickCollision();
         CheckPaddleCollision();
         ball_.UpdatePosition();

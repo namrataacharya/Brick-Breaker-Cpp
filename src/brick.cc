@@ -56,7 +56,7 @@ namespace brickbreaker {
         }
     }
 
-    bool Brick::IsDestroyed() const {
+    bool Brick::IsDestroyed() {
         return is_destroyed_; //fix implementation, incomplete
     }
 

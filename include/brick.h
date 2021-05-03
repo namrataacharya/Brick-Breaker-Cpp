@@ -30,7 +30,7 @@ namespace brickbreaker {
         void IncreaseHitCount();
 
         //true if brick is destroyed by ball (after certain # of hits)
-        bool IsDestroyed() const;
+        bool IsDestroyed();
 
 
     private:
