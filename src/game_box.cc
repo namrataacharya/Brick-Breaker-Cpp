@@ -7,7 +7,7 @@ namespace brickbreaker {
     GameBox::GameBox() {
 
         glm::vec2 position(400, 115);  //(400, 600)
-        glm::vec2 velocity(10, 10);  // (3, 3)
+        glm::vec2 velocity(3, 3);  // (3, 3)
         ball_ = Ball(position, velocity, 7);
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
@@ -161,8 +161,8 @@ namespace brickbreaker {
     void GameBox::CheckPaddleCollision() {
 
         //checks if ball within paddle's x range
-        if (ball_.GetPosition().x < paddle_.GetRight() &&
-            ball_.GetPosition().x > paddle_.GetLeft()) {
+        if (ball_.GetPosition().x <= paddle_.GetRight() && //OG: <
+            ball_.GetPosition().x >= paddle_.GetLeft()) { //OG: >
 
             //checks if ball hits paddle's upper y surface
             if (ball_.GetPosition().y >= paddle_.GetUpper() - ball_.GetRadius()) {
@@ -172,6 +172,18 @@ namespace brickbreaker {
 
                 vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
                 ball_.SetVelocity(current_velocity);
+            }
+        }
+
+        if (ball_.GetPosition().y <= paddle_.GetLower() && //OG: <=
+            ball_.GetPosition().y >= paddle_.GetUpper()) { //OG: >=
+
+            if ((ball_.GetPosition().x >= paddle_.GetLeft() - ball_.GetRadius() &&
+                 ball_.GetPosition().x <= paddle_.GetRight() + ball_.GetRadius())) {
+
+                vec2 current_velocity = ball_.GetVelocity() * vec2(-1, 1);
+                ball_.SetVelocity(current_velocity);
+
             }
         }
     }
@@ -242,7 +254,8 @@ namespace brickbreaker {
 
     void GameBox::CheckIfLifeLost() {
 
-        if (ball_.GetPosition().y >= paddle_bottom_) {
+        // if (ball_.GetPosition().y >= paddle_bottom_) {
+        if (ball_.GetPosition().y >= lower_wall_ - ball_.GetRadius()) {
             lives_--;
 
             if (lives_ > 0) {

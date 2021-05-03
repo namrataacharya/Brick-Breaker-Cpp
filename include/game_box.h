@@ -56,9 +56,9 @@ namespace brickbreaker {
         int score_ = 0;
         int lives_ = 3;
 
-        int paddle_left_ = 370; //350
-        int paddle_right_ = 430; //450
-        int paddle_top_ = 650; //660
+        int paddle_left_ = 360; //350
+        int paddle_right_ = 440; //450
+        int paddle_top_ = 650; //660 //650 - current
         int paddle_bottom_ = 670; //680
 
         const int left_wall_ = 100;
