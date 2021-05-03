@@ -48,6 +48,7 @@ namespace brickbreaker {
         std::vector<Brick> bricks_;
 
         //int frame_count_ = 0;
+        int score_ = 0;
 
         int paddle_left_ = 370; //350
         int paddle_right_ = 430; //450

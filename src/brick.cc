@@ -60,4 +60,9 @@ namespace brickbreaker {
         return is_destroyed_; //fix implementation, incomplete
     }
 
+    int Brick::GetPointValue() {
+        points_ = strength_ * 25;
+        return points_;
+    }
+
 }

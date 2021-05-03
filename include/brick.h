@@ -32,6 +32,8 @@ namespace brickbreaker {
         //true if brick is destroyed by ball (after certain # of hits)
         bool IsDestroyed();
 
+        int GetPointValue();
+
 
     private:
 
@@ -46,6 +48,7 @@ namespace brickbreaker {
 
         int strength_;
         int hit_count_ = 0;
+        int points_;
 
         bool is_destroyed_ = false;
 

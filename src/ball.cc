@@ -52,7 +52,7 @@ namespace brickbreaker {
 
 
     void Ball::IncreaseVelocity() {
-        velocity_ = velocity_ + vec2(0.01, 0.01);
+        velocity_ = velocity_ + vec2(0.25, 0.25);
     }
 
 }

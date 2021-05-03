@@ -53,6 +53,10 @@ namespace brickbreaker {
         ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
                                           vec2(right_wall_, lower_wall_)));
 
+        ci::gl::drawStringCentered("Score: " + std::to_string(score_), vec2((left_wall_),
+                                                     (upper_wall_ / 2)), "white",
+                                   cinder::Font("Arial", 20));
+
         ///*
         ci::gl::color(ci::Color("magenta"));
         ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());
@@ -83,11 +87,6 @@ namespace brickbreaker {
                     ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
                 }
 
-                /*
-                if (brick.IsDestroyed()) {
-                    ci::gl::color(ci::Color("black"));
-                }*/
-
                 //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
                 ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
 
@@ -101,22 +100,6 @@ namespace brickbreaker {
                                        cinder::Font("Arial", 30));
         }
 
-        /*
-        for(const Brick &brick : bricks_) {
-
-            if (color_switch % 2 == 0) {
-                ci::gl::color(ci::Color8u(220,0, (color_multiplier * color_spacer)));
-
-            } else {
-                ci::gl::color(ci::Color8u(220,75, (color_multiplier * color_spacer)));
-            }
-
-            //ci::gl::drawStrokedRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
-            ci::gl::drawSolidRect(ci::Rectf(brick.GetLeftUpperBound(), brick.GetRightLowerBound()));
-
-            color_multiplier++;
-            color_switch++;
-        } */
         /*
         ci::gl::color(ci::Color("magenta"));
         ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());*/
@@ -180,18 +163,15 @@ namespace brickbreaker {
                 ball_.GetPosition().x <= brick.GetRightWall()) {
 
                 //checks if ball hits brick upper/lower wall
-                if ((ball_.GetPosition().y <= brick.GetLowerWall() + ball_.GetRadius() && //OG: ||
-                    ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) { //&& brick.IsDestroyed() == false
+                if ((ball_.GetPosition().y <= brick.GetLowerWall() + ball_.GetRadius() &&
+                    ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) {
 
-                    /*
-                    brick.IncreaseHitCount();
-                    if (brick.IsDestroyed() == false) {
-                        vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
-                        ball_.SetVelocity(current_velocity);
-                    }*/
                     brick.IncreaseHitCount();
                     if (brick.IsDestroyed() == true) {
                         bricks_.erase(bricks_.begin() + current);
+                        score_ += brick.GetPointValue();
+
+                        //ball_.IncreaseVelocity();
                     }
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
@@ -214,15 +194,7 @@ namespace brickbreaker {
 
                 //checks if ball hits brick left/right side wall
                 if ((ball_.GetPosition().x >= brick.GetLeftWall() - ball_.GetRadius() &&
-                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius())) { // && brick.IsDestroyed() == false
-
-                    /*
-                    brick.IncreaseHitCount();
-                    if (brick.IsDestroyed() == false) {
-                        vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
-                        ball_.SetVelocity(current_velocity);
-                    }
-                     */
+                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius())) {
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(-1, 1);
                     ball_.SetVelocity(current_velocity);
@@ -234,6 +206,9 @@ namespace brickbreaker {
                     brick.IncreaseHitCount();
                     if (brick.IsDestroyed() == true) {
                         bricks_.erase(bricks_.begin() + current);
+                        score_ += brick.GetPointValue();
+
+                        //ball_.IncreaseVelocity();
                     }
                      //*/
                 }
