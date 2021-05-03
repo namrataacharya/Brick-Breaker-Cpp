@@ -14,7 +14,7 @@ namespace brickbreaker {
                             vec2 (paddle_right_, paddle_bottom_));
 
         int max_strength_level = 4; //# of brick levels
-        int bricks_per_row = 7; //10
+        int bricks_per_row = 7; //10 //7 -> (current)
         int brick_strength = max_strength_level;
 
         //takes care of x/row spacing
@@ -49,18 +49,23 @@ namespace brickbreaker {
     }
 
     void GameBox::Display() const {
-        ci::gl::color(ci::Color("white"));
+        ci::gl::color(ci::Color("cyan"));
         ci::gl::drawStrokedRect(ci::Rectf(vec2(left_wall_, upper_wall_),
                                           vec2(right_wall_, lower_wall_)));
 
-        ci::gl::drawStringCentered("Score: " + std::to_string(score_), vec2((left_wall_),
-                                                     (upper_wall_ / 2)), "white",
+
+        ci::gl::drawString("Score: " + std::to_string(score_), vec2((left_wall_),
+                                                     (upper_wall_ / 2)), "cyan",
                                    cinder::Font("Arial", 20));
 
-        ///*
+        ci::gl::drawString("Lives: " + std::to_string(lives_), vec2((right_wall_ - 65),
+                                                                    (upper_wall_ / 2)), "cyan",
+                           cinder::Font("Arial", 20));
+
+        /*
         ci::gl::color(ci::Color("magenta"));
         ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());
-         //*/
+         */
 
         ci::gl::color(ci::Color("cyan"));
         ci::gl::drawSolidRect(ci::Rectf(paddle_.GetLeftBound(), paddle_.GetRightBound()));
@@ -71,7 +76,12 @@ namespace brickbreaker {
         int color_spacer = 255 / bricks_.size();
         int color_multiplier = 0;*/
 
-        if (!bricks_.empty()) {
+        if (!bricks_.empty() && lives_ > 0) {
+
+            /*
+            ci::gl::drawStringCentered("Score: " + std::to_string(score_), vec2((left_wall_),
+                                                                                (upper_wall_ / 2)), "white",
+                                       cinder::Font("Arial", 20)); */
 
             //draws all bricks
             int color_switch = 0;
@@ -98,17 +108,29 @@ namespace brickbreaker {
             ci::gl::drawStringCentered("GAME OVER", vec2((right_wall_ + left_wall_) / 2,
                                                          (upper_wall_ + lower_wall_) / 2), "green",
                                        cinder::Font("Arial", 30));
+            /*
+            ci::gl::drawStringCentered("Score: " + std::to_string(score_),
+                                       vec2((right_wall_ + left_wall_) / 2,
+                                            ((upper_wall_ + lower_wall_) / 2) + 20), "green",
+                                       cinder::Font("Arial", 20));
+                                       */
         }
 
-        /*
+        ///*
         ci::gl::color(ci::Color("magenta"));
-        ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());*/
+        ci::gl::drawSolidCircle(ball_.GetPosition(), ball_.GetRadius());
+        //*/
     }
 
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
-        CheckBrickCollision();
+        if (lives_ > 0) { //added
+            CheckBrickCollision();
+            CheckIfLifeLost();
+        }
+        //CheckBrickCollision();
         CheckPaddleCollision();
+        //CheckIfLifeLost(); //new
         ball_.UpdatePosition();
         /*
         if (frame_count_ == 50) {
@@ -216,6 +238,25 @@ namespace brickbreaker {
 
             current++;
         }
+    }
+
+    void GameBox::CheckIfLifeLost() {
+
+        if (ball_.GetPosition().y >= paddle_bottom_) {
+            lives_--;
+
+            if (lives_ > 0) {
+                ResetAfterLifeLost();
+            }
+            //ResetAfterLifeLost();
+        }
+    }
+
+    void GameBox::ResetAfterLifeLost() {
+
+        //glm::vec2 position(400, 115);  //(400, 600)
+        ball_.SetPosition(vec2(400, 115));
+
     }
 
     Ball& GameBox::GetBall() {

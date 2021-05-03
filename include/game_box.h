@@ -36,6 +36,11 @@ namespace brickbreaker {
 
         void CheckBrickCollision();
 
+        void CheckIfLifeLost();
+
+        void ResetAfterLifeLost();
+
+
         Ball& GetBall();
 
         Paddle& GetPaddle();
@@ -49,11 +54,12 @@ namespace brickbreaker {
 
         //int frame_count_ = 0;
         int score_ = 0;
+        int lives_ = 3;
 
         int paddle_left_ = 370; //350
         int paddle_right_ = 430; //450
-        int paddle_top_ = 660; //650
-        int paddle_bottom_ = 680;
+        int paddle_top_ = 650; //660
+        int paddle_bottom_ = 670; //680
 
         const int left_wall_ = 100;
         const int right_wall_ = 700;
