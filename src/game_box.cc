@@ -1,14 +1,17 @@
 #include "game_box.h"
+#include "cinder/Rand.h"
 
 using glm::vec2;
+using std::rand;
 
 namespace brickbreaker {
 
     GameBox::GameBox() {
 
+        /*
         glm::vec2 position(400, 115);  //(400, 600)
         glm::vec2 velocity(3, 3);  // (3, 3)
-        ball_ = Ball(position, velocity, 7);
+        ball_ = Ball(position, velocity, 7);*/
 
         paddle_ = Paddle(vec2 (paddle_left_, paddle_top_),
                             vec2 (paddle_right_, paddle_bottom_));
@@ -29,6 +32,8 @@ namespace brickbreaker {
         double brick_upper;
         double brick_lower;
 
+
+
         for (int i = 1; i <= max_strength_level; i++) {
             for (int j = 0; j < bricks_per_row; j++) {
 
@@ -36,6 +41,7 @@ namespace brickbreaker {
                 brick_right = brick_left + brick_length - 1; // - 1 was added
                 brick_upper = upper_wall_ + (i * brick_height);
                 brick_lower = brick_upper + brick_height - 1; // - 1 was added
+                bricks_end_y_ = brick_lower; //used when generating random ball start position
 
                 /*
                 // FIX STRENGTH ASSIGNMENT, INCORRECT!
@@ -46,6 +52,13 @@ namespace brickbreaker {
             }
             brick_strength--;
         }
+
+        RandomStartPosition();
+
+        glm::vec2 position(random_x_, random_y_);  //(400, 600)
+        glm::vec2 velocity(2.5, 2.5);  // (3, 3)
+        ball_ = Ball(position, velocity, 7);
+
     }
 
     void GameBox::Display() const {
@@ -105,6 +118,7 @@ namespace brickbreaker {
             }
 
         } else {
+
             ci::gl::drawStringCentered("GAME OVER", vec2((right_wall_ + left_wall_) / 2,
                                                          (upper_wall_ + lower_wall_) / 2), "green",
                                        cinder::Font("Arial", 30));
@@ -124,7 +138,7 @@ namespace brickbreaker {
 
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
-        if (lives_ > 0) { //added
+        if (lives_ > 0 || game_over_ == false) { //added
             CheckBrickCollision();
             CheckIfLifeLost();
         }
@@ -140,6 +154,14 @@ namespace brickbreaker {
 
         frame_count_++;
          */
+    }
+
+    void GameBox::RandomStartPosition() {
+        random_x_ = cinder::randInt(left_wall_ + ball_.GetRadius() + 150,
+                                    right_wall_ - ball_.GetRadius() - 150);
+
+        random_y_ = cinder::randInt(bricks_end_y_ + ball_.GetRadius() + 50,
+                                    paddle_top_ - ball_.GetRadius() - 100);
     }
 
     void GameBox::CheckWallCollision() {
@@ -205,7 +227,8 @@ namespace brickbreaker {
                         bricks_.erase(bricks_.begin() + current);
                         score_ += brick.GetPointValue();
 
-                        //ball_.IncreaseVelocity();
+                        //
+                        ball_.IncreaseVelocity();
                     }
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
@@ -242,7 +265,8 @@ namespace brickbreaker {
                         bricks_.erase(bricks_.begin() + current);
                         score_ += brick.GetPointValue();
 
-                        //ball_.IncreaseVelocity();
+                        //
+                        ball_.IncreaseVelocity();
                     }
                      //*/
                 }
@@ -260,15 +284,20 @@ namespace brickbreaker {
 
             if (lives_ > 0) {
                 ResetAfterLifeLost();
+
+            } else if (lives_ <= 0) {
+                game_over_ = true;
             }
-            //ResetAfterLifeLost();
         }
     }
 
     void GameBox::ResetAfterLifeLost() {
 
         //glm::vec2 position(400, 115);  //(400, 600)
-        ball_.SetPosition(vec2(400, 115));
+        //ball_.SetPosition(vec2(400, 115));
+
+        RandomStartPosition();
+        ball_.SetPosition(vec2(random_x_, random_y_));
 
     }
 

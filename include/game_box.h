@@ -30,6 +30,8 @@ namespace brickbreaker {
          */
         void AdvanceOneFrame();
 
+        void RandomStartPosition();
+
         void CheckWallCollision();
 
         void CheckPaddleCollision();
@@ -52,13 +54,18 @@ namespace brickbreaker {
         Paddle paddle_;
         std::vector<Brick> bricks_;
 
+        bool game_over_ = false;
+
         //int frame_count_ = 0;
         int score_ = 0;
         int lives_ = 3;
+        double bricks_end_y_;
+        int random_x_;
+        int random_y_;
 
         int paddle_left_ = 360; //350
         int paddle_right_ = 440; //450
-        int paddle_top_ = 650; //660 //650 - current
+        int paddle_top_ = 650; //660
         int paddle_bottom_ = 670; //680
 
         const int left_wall_ = 100;

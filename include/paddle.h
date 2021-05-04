@@ -35,7 +35,7 @@ namespace brickbreaker {
 
     private:
 
-        int shift = 30;
+        int shift = 40;
         int length_;
 
         vec2 left_bound_;
