@@ -103,7 +103,7 @@ namespace brickbreaker {
     void GameBox::AdvanceOneFrame() {
         CheckWallCollision();
 
-        if (lives_ > 0 || game_over_ == false) {
+        if (lives_ > 0 && game_over_ == false) {
             CheckBrickCollision();
             CheckIfLifeLost();
         }
@@ -172,14 +172,12 @@ namespace brickbreaker {
 
         for (Brick &brick : bricks_) {
 
-            //OG VERSION
-            /*
             if (ball_.GetPosition().x >= brick.GetLeftWall() &&
                 ball_.GetPosition().x <= brick.GetRightWall()) {
 
                 //checks if ball hits brick upper/lower wall
                 if ((ball_.GetPosition().y <= brick.GetLowerWall() + ball_.GetRadius() &&
-                    ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) {
+                     ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) {
 
                     brick.IncreaseHitCount();
                     if (brick.IsDestroyed() == true) {
@@ -194,54 +192,8 @@ namespace brickbreaker {
                 }
             }
 
-            if (ball_.GetPosition().y <= brick.GetLowerWall() && // <=
-                ball_.GetPosition().y >= brick.GetUpperWall()) { // >=
-
-                //checks if ball hits brick left/right side wall
-                if ((ball_.GetPosition().x >= brick.GetLeftWall() - ball_.GetRadius() &&
-                    ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius())) {
-
-                    vec2 current_velocity = ball_.GetVelocity() * vec2(-1, 1);
-                    ball_.SetVelocity(current_velocity);
-
-                    //removes brick from game if hit certain # of times
-                    brick.IncreaseHitCount();
-                    if (brick.IsDestroyed() == true) {
-                        bricks_.erase(bricks_.begin() + current);
-                        score_ += brick.GetPointValue();
-
-                        ball_.IncreaseVelocity();
-                    }
-                }
-            }*/
-
-
-            if (ball_.GetPosition().x >= brick.GetLeftWall() &&
-                ball_.GetPosition().x <= brick.GetRightWall()) {
-
-                //checks if ball hits brick upper/lower wall
-                if ((ball_.GetPosition().y <= brick.GetLowerWall() + ball_.GetRadius() &&
-                     ball_.GetPosition().y >= brick.GetUpperWall() - ball_.GetRadius())) {
-
-                    /*
-                    vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
-                    ball_.SetVelocity(current_velocity);*/
-
-                    brick.IncreaseHitCount();
-                    if (brick.IsDestroyed() == true) {
-                        bricks_.erase(bricks_.begin() + current);
-                        score_ += brick.GetPointValue();
-
-                        ball_.IncreaseVelocity();
-                    }
-
-                    ///*
-                    vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
-                    ball_.SetVelocity(current_velocity);//*/
-                }
-
-            } if (ball_.GetPosition().y <= brick.GetLowerWall() &&
-                       ball_.GetPosition().y >= brick.GetUpperWall()) {
+            if (ball_.GetPosition().y <= brick.GetLowerWall() &&
+                ball_.GetPosition().y >= brick.GetUpperWall()) {
 
                 if ((ball_.GetPosition().x >= brick.GetLeftWall() - ball_.GetRadius() &&
                      ball_.GetPosition().x <= brick.GetRightWall() + ball_.GetRadius())) {
@@ -258,7 +210,6 @@ namespace brickbreaker {
                         ball_.IncreaseVelocity();
                     }
                 }
-
             }
 
             current++;
@@ -272,8 +223,9 @@ namespace brickbreaker {
 
             if (lives_ > 0) {
                 ResetAfterLifeLost();
+            }
 
-            } else if (lives_ <= 0) {
+            if (bricks_.empty()) {
                 game_over_ = true;
             }
         }

@@ -57,7 +57,7 @@ namespace brickbreaker {
     }
 
     bool Brick::IsDestroyed() {
-        return is_destroyed_; //fix implementation, incomplete
+        return is_destroyed_;
     }
 
     int Brick::GetPointValue() {

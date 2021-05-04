@@ -22,8 +22,10 @@ namespace brickbreaker {
         void MoveRight();
         void MoveLeft();
 
+        /*
         void SetLeftBound(vec2 newLeft);
         void SetRightBound(vec2 newRight);
+         */
 
         vec2 GetLeftBound() const;
         vec2 GetRightBound() const;

@@ -36,12 +36,6 @@ namespace brickbreaker {
         void SetPosition(vec2 newPosition);
 
         /**
-         * Changes and sets the ball's radius.
-         * @param radius that will be given to the ball.
-         */
-        void SetRadius(double radius);
-
-        /**
          * Returns the ball's current velocity.
          * @return vector representing ball's velocity.
          */
@@ -64,16 +58,6 @@ namespace brickbreaker {
          */
         void UpdatePosition();
 
-        /**
-         * Returns the speed of the ball.
-         * @return double representing the ball's speed.
-         */
-        double GetSpeed() const;
-
-        /**
-         * Updates the speed of the ball based on it's current velocity.
-         */
-        void UpdateSpeed();
 
         void IncreaseVelocity();
 
@@ -81,7 +65,6 @@ namespace brickbreaker {
         vec2 position_;
         vec2 velocity_;
         double radius_;
-        //double speed_;
 
     };
 

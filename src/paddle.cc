@@ -52,6 +52,7 @@ namespace brickbreaker {
         upper_y_ = left_bound_.y;
     }
 
+    /*
     void Paddle::SetLeftBound(vec2 newLeft) {
         left_bound_ = newLeft;
 
@@ -64,7 +65,7 @@ namespace brickbreaker {
 
         right_x_ = newRight.x;
         lower_y_ = newRight.y;
-    }
+    }*/
 
     vec2 Paddle::GetLeftBound() const {
         return left_bound_;
