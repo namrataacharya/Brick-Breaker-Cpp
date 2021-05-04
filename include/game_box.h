@@ -42,7 +42,6 @@ namespace brickbreaker {
 
         void ResetAfterLifeLost();
 
-
         Ball& GetBall();
 
         Paddle& GetPaddle();
@@ -56,9 +55,8 @@ namespace brickbreaker {
 
         bool game_over_ = false;
 
-        //int frame_count_ = 0;
         int score_ = 0;
-        int lives_ = 3;
+        int lives_ = 10;
         double bricks_end_y_;
         int random_x_;
         int random_y_;

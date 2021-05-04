@@ -81,7 +81,7 @@ namespace brickbreaker {
         vec2 position_;
         vec2 velocity_;
         double radius_;
-        double speed_;
+        //double speed_;
 
     };
 
