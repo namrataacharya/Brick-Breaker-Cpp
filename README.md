@@ -1,7 +1,7 @@
 # Brick Breaker
 
 _The goal of this game is to destroy all of the bricks on the screen using the 
-arrow keys to control the paddle.The difficulty of the game increases as more bricks
+arrow keys to control the paddle. The difficulty of the game increases as more bricks
 are destroyed. Bricks have varying strengths._
 
 **RULES:**  
