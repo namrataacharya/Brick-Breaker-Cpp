@@ -5,6 +5,7 @@ namespace brickbreaker {
 
     Brick::Brick() {}
 
+
     Brick::Brick(int strength) {
         strength_ = strength;
     }

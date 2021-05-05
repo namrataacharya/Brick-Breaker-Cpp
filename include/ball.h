@@ -58,7 +58,9 @@ namespace brickbreaker {
          */
         void UpdatePosition();
 
-
+        /**
+         * Increase the ball's speed by changing the velocity.
+         */
         void IncreaseVelocity();
 
     private:
