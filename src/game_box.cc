@@ -172,6 +172,9 @@ namespace brickbreaker {
 
         for (Brick &brick : bricks_) {
 
+            //prevents brick from being "deleted twice"
+            bool destroyed = false;
+
             if (ball_.GetPosition().x >= brick.GetLeftWall() &&
                 ball_.GetPosition().x <= brick.GetRightWall()) {
 
@@ -185,6 +188,8 @@ namespace brickbreaker {
                         score_ += brick.GetPointValue();
 
                         ball_.IncreaseVelocity();
+
+                        destroyed = true;
                     }
 
                     vec2 current_velocity = ball_.GetVelocity() * vec2(1, -1);
@@ -202,12 +207,15 @@ namespace brickbreaker {
                     ball_.SetVelocity(current_velocity);
 
                     //removes brick from game if hit certain # of times
-                    brick.IncreaseHitCount();
-                    if (brick.IsDestroyed() == true) {
-                        bricks_.erase(bricks_.begin() + current);
-                        score_ += brick.GetPointValue();
+                    if (destroyed == false) {
+                        brick.IncreaseHitCount();
 
-                        ball_.IncreaseVelocity();
+                        if (brick.IsDestroyed() == true) {
+                            bricks_.erase(bricks_.begin() + current);
+                            score_ += brick.GetPointValue();
+
+                            ball_.IncreaseVelocity();
+                        }
                     }
                 }
             }
@@ -219,14 +227,16 @@ namespace brickbreaker {
     void GameBox::CheckIfLifeLost() {
 
         if (ball_.GetPosition().y >= lower_wall_ - ball_.GetRadius()) {
-            lives_--;
-
-            if (lives_ > 0) {
-                ResetAfterLifeLost();
-            }
 
             if (bricks_.empty()) {
                 game_over_ = true;
+
+            } else {
+
+                lives_--;
+                if (lives_ > 0) {
+                    ResetAfterLifeLost();
+                }
             }
         }
     }
