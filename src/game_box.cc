@@ -244,6 +244,10 @@ namespace brickbreaker {
         return paddle_;
     }
 
+    int GameBox::GetLifeCount() {
+        return lives_;
+    }
+
 }
 
 

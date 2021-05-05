@@ -46,6 +46,8 @@ namespace brickbreaker {
 
         Paddle& GetPaddle();
 
+        int GetLifeCount();
+
 
     private:
 
@@ -56,7 +58,7 @@ namespace brickbreaker {
         bool game_over_ = false;
 
         int score_ = 0;
-        int lives_ = 10;
+        int lives_ = 3;
 
         double bricks_end_y_;
         int random_x_;
