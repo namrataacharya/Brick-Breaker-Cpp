@@ -45,10 +45,6 @@ namespace brickbreaker {
         return right_bound_;
     }
 
-    int Brick::GetHitCount() {
-        return hit_count_;
-    }
-
     void Brick::IncreaseHitCount() {
         hit_count_++;
 

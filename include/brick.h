@@ -70,12 +70,6 @@ namespace brickbreaker {
         vec2 GetRightLowerBound() const;
 
         /**
-         * Returns the number of times the brick has been hit by the ball.
-         * @return number of times the brick has been hit.
-         */
-        int GetHitCount();
-
-        /**
          * Increases the brick's hit count by 1 every time there is a brick collision.
          */
         void IncreaseHitCount();
