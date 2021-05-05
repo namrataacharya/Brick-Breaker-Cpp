@@ -19,7 +19,7 @@ namespace brickbreaker {
         double brick_length = double(game_box_length_ - 100) / double(bricks_per_row);
 
         //takes care of y/column spacing
-        double brick_height = double(brick_space_y) / double(max_strength_level);
+        double brick_height = double(brick_space_y_) / double(max_strength_level);
 
         double brick_left;
         double brick_right;

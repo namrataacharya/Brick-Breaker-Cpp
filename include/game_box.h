@@ -73,7 +73,7 @@ namespace brickbreaker {
         const int lower_wall_ = 700;
 
         int game_box_length_ = right_wall_ - left_wall_;
-        int brick_space_y = 200;
+        int brick_space_y_ = 200;
 
     };
 }
