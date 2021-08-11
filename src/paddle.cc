@@ -64,7 +64,6 @@ namespace brickbreaker {
 
         right_x_ = newRight.x;
         lower_y_ = newRight.y;
-
     }
 
     vec2 Paddle::GetLeftBound() const {

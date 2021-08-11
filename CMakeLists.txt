@@ -40,7 +40,7 @@ FetchContent_Declare(
 FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
     FetchContent_Populate(catch2)
-    add_library(catch2 INTERFACE) # include/paddle.h src/paddle.cc) # include/ball.h src/ball.cc) # include/game_box.h include/brick_breaker_app.h) # apps/cinder_app_main.cc src/game_box.cc src/brick_breaker_app.cc) # tests/test_main.cc tests/test_game_box.cc)
+    add_library(catch2 INTERFACE) # src/brick.cc) # include/brick.h src/brick.cpp) # include/paddle.h src/paddle.cc) # include/ball.h src/ball.cc) # include/game_box.h include/brick_breaker_app.h) # apps/cinder_app_main.cc src/game_box.cc src/brick_breaker_app.cc) # tests/test_main.cc tests/test_game_box.cc)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
@@ -52,7 +52,8 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 list(APPEND SOURCE_FILES    src/game_box.cc
                             src/brick_breaker_app.cc
                             src/ball.cc
-                            src/paddle.cc)
+                            src/paddle.cc
+                            src/brick.cc)
 
 list(APPEND TEST_FILES tests/test_game_box.cc)
 

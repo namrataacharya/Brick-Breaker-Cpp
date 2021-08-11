@@ -6,6 +6,7 @@
 #include "cinder/gl/gl.h"
 #include "ball.h"
 #include "paddle.h"
+#include "brick.h"
 
 using glm::vec2;
 
@@ -33,6 +34,8 @@ namespace brickbreaker {
 
         void CheckPaddleCollision();
 
+        void CheckBrickCollision();
+
         Ball& GetBall();
 
         Paddle& GetPaddle();
@@ -42,16 +45,22 @@ namespace brickbreaker {
 
         Ball ball_;
         Paddle paddle_;
+        std::vector<Brick> bricks_;
 
-        int paddle_left_ = 350; //350 //testing: 330
-        int paddle_right_ = 450; //450 //testing: 470
-        int paddle_top_ = 650;
+        //int frame_count_ = 0;
+
+        int paddle_left_ = 370; //350
+        int paddle_right_ = 430; //450
+        int paddle_top_ = 660; //650
         int paddle_bottom_ = 680;
 
         const int left_wall_ = 100;
         const int right_wall_ = 700;
         const int upper_wall_ = 100;
         const int lower_wall_ = 700;
+
+        int game_box_length_ = right_wall_ - left_wall_;
+        int brick_space_y = 200;
 
     };
 }
