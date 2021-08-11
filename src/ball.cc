@@ -11,7 +11,6 @@ namespace brickbreaker {
         position_ = position;
         velocity_ = velocity;
         radius_ = radius;
-        speed_ = length(velocity_);
     }
 
     void Ball::SetVelocity(vec2 newVelocity) {
@@ -20,10 +19,6 @@ namespace brickbreaker {
 
     void Ball::SetPosition(vec2 newPosition) {
         position_ = newPosition;
-    }
-
-    void Ball::SetRadius(double radius) {
-        radius_ = radius;
     }
 
     vec2 Ball::GetVelocity() const {
@@ -42,17 +37,8 @@ namespace brickbreaker {
         position_ += velocity_;
     }
 
-    double Ball::GetSpeed() const {
-        return speed_;
-    }
-
-    void Ball::UpdateSpeed() {
-        speed_ = length(velocity_);
-    }
-
-
     void Ball::IncreaseVelocity() {
-        velocity_ = velocity_ + vec2(0.01, 0.01);
+        velocity_ = velocity_ * vec2(1.04, 1.04);
     }
 
 }

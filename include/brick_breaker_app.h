@@ -21,7 +21,7 @@ namespace brickbreaker {
         void update() override;
         void keyDown(ci::app::KeyEvent event) override;
 
-        const int kWindowSize = 800; //650
+        const int kWindowSize = 800;
         const int kMargin = 100;
 
     private:

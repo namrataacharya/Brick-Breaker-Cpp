@@ -5,6 +5,7 @@ namespace brickbreaker {
 
     Brick::Brick() {}
 
+
     Brick::Brick(int strength) {
         strength_ = strength;
     }
@@ -44,10 +45,6 @@ namespace brickbreaker {
         return right_bound_;
     }
 
-    int Brick::GetHitCount() {
-        return hit_count_;
-    }
-
     void Brick::IncreaseHitCount() {
         hit_count_++;
 
@@ -57,7 +54,12 @@ namespace brickbreaker {
     }
 
     bool Brick::IsDestroyed() {
-        return is_destroyed_; //fix implementation, incomplete
+        return is_destroyed_;
+    }
+
+    int Brick::GetPointValue() {
+        points_ = strength_ * 25;
+        return points_;
     }
 
 }

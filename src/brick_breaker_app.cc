@@ -20,15 +20,11 @@ namespace brickbreaker {
     void BrickBreakerApp::keyDown(ci::app::KeyEvent event) {
         switch (event.getCode()) {
             case ci::app::KeyEvent::KEY_RIGHT:
-                //game_.CheckPaddleCollision();
                 game_.GetPaddle().MoveRight();
-                //game_.CheckPaddleCollision(); //gets rid of boundary issue
                 break;
 
             case ci::app::KeyEvent::KEY_LEFT:
-                //game_.CheckPaddleCollision();
                 game_.GetPaddle().MoveLeft();
-                //game_.CheckPaddleCollision(); //gets rid of boundary issue
                 break;
         }
     }
